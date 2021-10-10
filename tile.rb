@@ -52,5 +52,15 @@ class Tile
         neighbours.select(&:bombed?).count
     end
 
+    def explore
+        return self if flagged?
+        return self if explored?
+        @explored= true
+        if !bombed? && adjacent_bomb_count==0
+            neighbours.each(&:explore)
+        end
+        self    
+    end
+
     
 end
