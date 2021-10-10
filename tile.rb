@@ -83,5 +83,10 @@ class Tile
         end
     end
 
-    
+    def inspect
+        {pos: pos,
+         bombed: bombed?
+         explored: explored?
+         flagged: flagged?}.inspect
+    end
 end
