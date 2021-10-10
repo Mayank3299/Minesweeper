@@ -47,4 +47,10 @@ class Tile
 
         adjacent_neighbours.map(|pos| @board[pos])
     end
+
+    def adjacent_bomb_count
+        neighbours.select(&:bombed?).count
+    end
+
+    
 end
