@@ -72,5 +72,16 @@ class Tile
         end
     end
 
+    def reveal
+        # to fully show the board at the end of the game
+        if flagged?
+            bombed? ? "F" : "f"
+        elsif bombed?
+            explored? ? "X" : "B"
+        else
+            adjacent_bomb_count == 0 ? "_" : adjacent_bomb_count.to_s
+        end
+    end
+
     
 end
