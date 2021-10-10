@@ -35,4 +35,16 @@ class Board
             total_bombs+=1
         end
     end
+
+    def reveal
+        render(true)
+    end
+
+    def render(reveal= false)
+        @grid.each do |row|
+            row.each do |tile|
+                reveal ? tile.reveal : tile.render
+            end.join("")
+        end.join("\n")
+    end
 end 
