@@ -62,5 +62,15 @@ class Tile
         self    
     end
 
+    def render
+        if flagged?
+            "F"
+        elsif explored?
+            adjacent_bomb_count == 0 ? "_" : adjacent_bomb_count.to_s
+        else
+            "*"
+        end
+    end
+
     
 end
