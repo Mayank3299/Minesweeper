@@ -47,4 +47,12 @@ class Board
             end.join("")
         end.join("\n")
     end
+
+    def win?
+        @grid.flatten.all?{|tile| tile.bombed? != tile.explored?}
+    end
+
+    def lose?
+        @grid.flatten.any?{|tile| tile.bombed? && tile.explored?}
+    end
 end 
