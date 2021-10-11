@@ -4,7 +4,7 @@ class Game
         @board= Board.new(size,bombs)
     end
 
-    def game_over?
+    def play
         until @board.win? || @board.lose?
             puts @board.render
 

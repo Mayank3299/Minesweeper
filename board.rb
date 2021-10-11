@@ -1,5 +1,5 @@
 require_relative "tile.rb"
-
+require "byebug"
 class Board
     
     attr_reader :grid_size
@@ -18,7 +18,7 @@ class Board
 
     def generate_board
         @grid= Array.new(@grid_size) do |row|
-            Array.new(@grid_size) {|col| Tile.new(self,[row,col])
+            Array.new(@grid_size) {|col| Tile.new(self,[row,col])}
         end
 
         plant_bombs
@@ -41,8 +41,8 @@ class Board
     end
 
     def render(reveal= false)
-        @grid.each do |row|
-            row.each do |tile|
+        @grid.map do |row|
+            row.map do |tile|
                 reveal ? tile.reveal : tile.render
             end.join("")
         end.join("\n")
@@ -55,4 +55,4 @@ class Board
     def lose?
         @grid.flatten.any?{|tile| tile.bombed? && tile.explored?}
     end
-end 
+end

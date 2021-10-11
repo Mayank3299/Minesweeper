@@ -12,7 +12,8 @@ class Tile
     ]
 
     def initialize(board, pos)
-        @board= board, @pos= pos   
+        @board= board 
+        @pos= pos   
         @bombed, @flagged, @explored= false, false, false
     end
 
@@ -38,14 +39,14 @@ class Tile
 
     def neighbours
         adjacent_neighbours= DISHA.map do |idx,idy|
-            [pos[0] + idx, pos[1] + idy]
+            [@pos[0] + idx, @pos[1] + idy]
         end.select do |row,col|
             [row,col].all? do |coord|
-                coord.between?(0,@board.grid_size-1)
+                coord.between?(0, @board.grid_size - 1)
             end
         end
 
-        adjacent_neighbours.map(|pos| @board[pos])
+        adjacent_neighbours.map{|pos| @board[pos]}
     end
 
     def adjacent_bomb_count
@@ -84,9 +85,9 @@ class Tile
     end
 
     def inspect
-        {pos: pos,
-         bombed: bombed?
-         explored: explored?
+        {pos: @pos,
+         bombed: bombed?,
+         explored: explored?,
          flagged: flagged?}.inspect
     end
 end
