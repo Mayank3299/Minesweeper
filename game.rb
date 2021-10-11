@@ -1,4 +1,5 @@
 require_relative "board.rb"
+require "yaml"
 class Game
     def initialize(size, bombs)
         @board= Board.new(size,bombs)
@@ -6,6 +7,7 @@ class Game
 
     def play
         until @board.win? || @board.lose?
+            system("clear")
             puts @board.render
 
             action, pos= get_move
@@ -33,6 +35,33 @@ class Game
             tile.toggle_flag
         when 'e'
             tile.explore
+        when 's'
+            save
+            puts "Do you still want to play or exit the game?"
+            puts "y- Yes / n- No"
+            inp= gets.chomp
+            case inp
+            when 'y'
+            when 'n'
+                exit
+            end
         end
     end
+
+    def save
+        puts "Enter a file name"
+        filename= gets.chomp
+        
+        File.write(filename, YAML.dump(self))
+    end
 end
+
+if $PROGRAM_NAME == __FILE__
+    case ARGV.count
+    when 0
+        Game.new(9,10).play
+    when 1
+        YAML.load_file(ARGV.shift).play
+    end
+end
+
