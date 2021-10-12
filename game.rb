@@ -1,4 +1,5 @@
 require_relative "board.rb"
+#require_relative "time.rb"
 require "yaml"
 class Game
     def initialize(size, bombs)
@@ -6,6 +7,8 @@ class Game
     end
 
     def play
+        start_time, end_time=[0,0]
+        start_time= Time.new
         until @board.win? || @board.lose?
             system("clear")
             puts @board.render
@@ -13,11 +16,15 @@ class Game
             action, pos= get_move
             perform_action(action,pos)
         end
-
+        end_time= Time.new
         if @board.win?
-            puts "YOU WON!!!!"
+            puts "\nYOU WON!!!!"
+            #puts "\nTime taken- #{TimeChecker.calc_time(start_time,end_time)}"
+            puts "\nTime taken- #{(end_time - start_time).to_i} seconds"
         elsif @board.lose?
+            system("clear")
             puts @board.reveal
+            puts "\nYOU LOST lol"
         end
     end
 
