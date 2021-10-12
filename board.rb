@@ -1,5 +1,6 @@
 require_relative "tile.rb"
 require "byebug"
+require "colorize"
 class Board
     
     attr_reader :grid_size
@@ -41,10 +42,11 @@ class Board
     end
 
     def render(reveal= false)
-        @grid.map do |row|
-            row.map do |tile|
+        puts "  #{(0...9).to_a.join(" ")}".light_green
+        @grid.map.with_index do |row,i|
+            "#{i} ".light_green + row.map do |tile|
                 reveal ? tile.reveal : tile.render
-            end.join("")
+            end.join(" ")
         end.join("\n")
     end
 

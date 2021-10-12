@@ -1,3 +1,7 @@
+FLAG= "\u{1F6A9}".force_encoding('utf-8')
+BLOC= "\u{25A1}".force_encoding('utf-8')
+COLOR= { 1 => :blue, 2 => :magenta, 3 => :light_cyan , 4 => :light_blue, 5 => :white}
+require "colorize"
 class Tile
 
     DISHA= [
@@ -64,10 +68,11 @@ class Tile
     end
 
     def render
+        bombs= adjacent_bomb_count
         if flagged?
-            "F"
+            "F".red
         elsif explored?
-            adjacent_bomb_count == 0 ? "_" : adjacent_bomb_count.to_s
+            bombs == 0 ? BLOC.light_black : bombs.to_s.colorize(COLOR[bombs])
         else
             "*"
         end
@@ -75,12 +80,13 @@ class Tile
 
     def reveal
         # to fully show the board at the end of the game
+        bombs= adjacent_bomb_count
         if flagged?
-            bombed? ? "F" : "f"
+            bombed? ? "F".red : "f".light_red
         elsif bombed?
-            explored? ? "X" : "B"
+            explored? ? "X".light_yellow.on_red : "B".yellow
         else
-            adjacent_bomb_count == 0 ? "_" : adjacent_bomb_count.to_s
+            bombs == 0 ? BLOC.light_black : bombs.to_s.colorize(COLOR[bombs])
         end
     end
 
